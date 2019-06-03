@@ -5,7 +5,12 @@
  */
 package servidoryisheng;
 
+import java.awt.Color;
+import java.net.URL;
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.border.CompoundBorder;
 
 /**
  *
@@ -21,8 +26,15 @@ public class janelaPaciente extends JFrame
         
         panelOpcoes jpp = new panelOpcoes();
         
+        jpp.setBorder(new CompoundBorder(BorderFactory.createLineBorder(Color.green),BorderFactory.createLineBorder(Color.black)));  
+        
+        URL iconURL = getClass().getResource("./images/medic.png");
+        ImageIcon icon = new ImageIcon(iconURL);
+        setIconImage(icon.getImage());
+        
         add(jpp);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setResizable(false);
         setVisible(true);
     }
 }
