@@ -18,6 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
@@ -37,9 +38,13 @@ public class panelOpcoes extends JPanel
     {    
         JTInfoPac = new JTextArea();
         JTInfoPac.setForeground(Color.black);
-        JTInfoPac.setBorder(BorderFactory.createLineBorder(Color.black,1));
+        JTInfoPac.setWrapStyleWord(true);
+        JTInfoPac.setLineWrap(true);
         JTInfoPac.setEditable(false);
-        
+                
+        JScrollPane JSInfoPac = new JScrollPane(JTInfoPac);
+        JSInfoPac.setBorder(BorderFactory.createLineBorder(Color.black,1));
+                
         switch(random)
         {
             case 1:
@@ -85,7 +90,7 @@ public class panelOpcoes extends JPanel
         Enviar.setForeground(Color.black);
         Enviar.setBorder(BorderFactory.createLineBorder(Color.black,1));
         
-        add(JTInfoPac);
+        add(JSInfoPac);
         add(Enviar);
         Enviar.addActionListener(new Envio());
     }
@@ -94,14 +99,13 @@ public class panelOpcoes extends JPanel
     {
         public void actionPerformed (ActionEvent e)
     	{
-        
+         JTInfoPac.append(" Aguardando conexão... \n");       
         try
         {
             try (ServerSocket server = new ServerSocket(Integer.parseInt("6660"))) 
             {
-                JTInfoPac.append("\n Aguardando conexão...");
                 Socket conexao = server.accept();
-                JTInfoPac.append("\n medico conectado!");
+                JTInfoPac.append("\n medico conectado! \n");
                 ObjectOutputStream out = new ObjectOutputStream(conexao.getOutputStream());
                 
                 String st = random+"";
@@ -124,6 +128,10 @@ public class panelOpcoes extends JPanel
         catch(IOException ex)
         {}
         
+        
+        JTInfoPac.append(" Aguardando conexão... \n");
         }      
+        
+        
     }
 }
