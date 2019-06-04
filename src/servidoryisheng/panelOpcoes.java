@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -34,9 +35,10 @@ public class panelOpcoes extends JPanel
     
     public panelOpcoes()
     {    
-        JTInfoPac = new JTextArea("Aguardando conexão...");
+        JTInfoPac = new JTextArea();
         JTInfoPac.setForeground(Color.black);
         JTInfoPac.setBorder(BorderFactory.createLineBorder(Color.black,1));
+        JTInfoPac.setEditable(false);
         
         switch(random)
         {
@@ -95,31 +97,31 @@ public class panelOpcoes extends JPanel
         
         try
         {
-            ServerSocket server = new ServerSocket(Integer.parseInt("6660"));
-
-            JTInfoPac.append("Aguardando conexão...");
-            Socket conexao = server.accept(); 
-            JTInfoPac.append("medico conectado!");
-            ObjectOutputStream out = new ObjectOutputStream(conexao.getOutputStream());
-                
-            String st = random+"";
-                
-            for(int i=0;i<jcbs.length;i++)
+            try (ServerSocket server = new ServerSocket(Integer.parseInt("6660"))) 
             {
-                st = st+",";
-                boolean opcao_at;
-                if(jcbs[i].getSelectedItem() == "Sim")
-                    opcao_at = true;
-                else
-                    opcao_at = false;
-                                        
-                st = st+opcao_at;
-            }
+                JTInfoPac.append("\n Aguardando conexão...");
+                Socket conexao = server.accept();
+                JTInfoPac.append("\n medico conectado!");
+                ObjectOutputStream out = new ObjectOutputStream(conexao.getOutputStream());
                 
-            out.writeObject(st);
-            server.close();
+                String st = random+"";
+                
+                for(int i=0;i<jcbs.length;i++)
+                {
+                    st = st+",";
+                    char opcao_at;
+                    if(jcbs[i].getSelectedItem() == "Sim")
+                        opcao_at = 't';
+                    else
+                        opcao_at = 'f';
+                    
+                    st = st+opcao_at;
+                }
+                
+                out.writeObject(st);
+            }
         }
-        catch(Exception ex)
+        catch(IOException ex)
         {}
         
         }      
