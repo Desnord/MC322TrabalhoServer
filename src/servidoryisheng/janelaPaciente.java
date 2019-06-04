@@ -21,7 +21,7 @@ public class janelaPaciente extends JFrame
     public janelaPaciente()
     {
         super("YiSheng - 医生 - Paciente");
-        setSize(500,300);
+        setSize(500,500);
         setLocationRelativeTo(null);
         
         panelOpcoes jpp = new panelOpcoes();
