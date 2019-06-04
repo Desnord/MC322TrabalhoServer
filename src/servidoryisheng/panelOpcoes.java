@@ -17,6 +17,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -28,14 +29,14 @@ public class panelOpcoes extends JPanel
     JButton Enviar;
     int random = (int)(Math.random()*4+1);            
     String sintomas = "";
-    JLabel lblInfo;
+    JTextArea JTInfoPac;
     
     
     public panelOpcoes()
     {    
-        lblInfo = new JLabel("Aguardando conexão...");
-        lblInfo.setForeground(Color.black);
-        lblInfo.setBorder(BorderFactory.createLineBorder(Color.black,1));
+        JTInfoPac = new JTextArea("Aguardando conexão...");
+        JTInfoPac.setForeground(Color.black);
+        JTInfoPac.setBorder(BorderFactory.createLineBorder(Color.black,1));
         
         switch(random)
         {
@@ -82,7 +83,7 @@ public class panelOpcoes extends JPanel
         Enviar.setForeground(Color.black);
         Enviar.setBorder(BorderFactory.createLineBorder(Color.black,1));
         
-        add(lblInfo);
+        add(JTInfoPac);
         add(Enviar);
         Enviar.addActionListener(new Envio());
     }
@@ -96,9 +97,9 @@ public class panelOpcoes extends JPanel
         {
             ServerSocket server = new ServerSocket(Integer.parseInt("6660"));
 
-            lblInfo.setText("Aguardando conexão...");
+            JTInfoPac.append("Aguardando conexão...");
             Socket conexao = server.accept(); 
-            lblInfo.setText("medico conectado!");
+            JTInfoPac.append("medico conectado!");
             ObjectOutputStream out = new ObjectOutputStream(conexao.getOutputStream());
                 
             String st = random+"";
@@ -116,6 +117,7 @@ public class panelOpcoes extends JPanel
             }
                 
             out.writeObject(st);
+            server.close();
         }
         catch(Exception ex)
         {}
