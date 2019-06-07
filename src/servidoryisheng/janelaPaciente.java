@@ -18,6 +18,8 @@ import javax.swing.border.CompoundBorder;
  */
 public class janelaPaciente extends JFrame
 {    
+    private static final long serialVersionUID = 1L;
+    
     public janelaPaciente()
     {
         super("YiSheng - 医生 - Paciente");

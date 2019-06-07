@@ -35,7 +35,7 @@ public class panelOpcoes extends JPanel
     private JButton Enviar;
     private int random = (int)(Math.random()*4+1);            
     private String sintomas = "";
-    private JTextArea JTInfoPac;
+    private static JTextArea JTInfoPac;
     
     public panelOpcoes()
     {    
@@ -44,6 +44,7 @@ public class panelOpcoes extends JPanel
         JTInfoPac.setWrapStyleWord(true);
         JTInfoPac.setLineWrap(true);
         JTInfoPac.setEditable(false);       
+                
         JScrollPane JSInfoPac = new JScrollPane(JTInfoPac);
         JSInfoPac.setBorder(BorderFactory.createLineBorder(Color.black,1));
                 
@@ -96,6 +97,16 @@ public class panelOpcoes extends JPanel
         Enviar = new JButton("Enviar");
         Enviar.setForeground(Color.black);
         Enviar.setBorder(BorderFactory.createLineBorder(Color.black,1));
+        Enviar.addActionListener(new Envio());
+        
+        Enviar.addMouseListener(new java.awt.event.MouseAdapter() 
+        {
+            @Override
+            public void mousePressed(java.awt.event.MouseEvent evt)
+            {
+                   JTInfoPac.append("Aguardando conexão... \n"); 
+            }     
+        });
       
         JLabel lblX = new JLabel();
         lblX.setBorder(BorderFactory.createLineBorder(Color.black,1));
@@ -103,8 +114,6 @@ public class panelOpcoes extends JPanel
         
         jps.add(lblX);
         jps.add(Enviar);
-        Enviar.addActionListener(new Envio());
-        
         
         //jpanel center
         JPanel jpc = new JPanel(new GridLayout(1,2));
@@ -127,15 +136,14 @@ public class panelOpcoes extends JPanel
     //evento do botao enviar
     private class Envio implements ActionListener
     {
+        
+        @Override
         public void actionPerformed (ActionEvent e)
-    	{
-            JTInfoPac.append("Aguardando conexão... \n");       
-
+    	{      
             try 
             {
                 ServerSocket server = new ServerSocket(Integer.parseInt("6660"));
                 Socket conexao = server.accept();
-                JTInfoPac.append("Medico conectado! \n");
                 ObjectOutputStream out = new ObjectOutputStream(conexao.getOutputStream());
 
                 String st = random+"";
@@ -152,8 +160,9 @@ public class panelOpcoes extends JPanel
 
                     st = st+opcao_at;
                 }
-                    out.writeObject(st);
-                }        
+                out.writeObject(st);
+                JTInfoPac.append("Dados enviados ao médico! \n");
+            }        
             catch(IOException ex)
             {}
         }         
