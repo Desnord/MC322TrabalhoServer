@@ -163,6 +163,7 @@ public class panelOpcoes extends JPanel
                 out.writeObject(st);
                 JTInfoPac.append("Dados enviados ao médico! \n");
                 
+                //fecha conexao
                 conexao.close();
                 server.close();
             }        
