@@ -162,6 +162,9 @@ public class panelOpcoes extends JPanel
                 }
                 out.writeObject(st);
                 JTInfoPac.append("Dados enviados ao médico! \n");
+                
+                conexao.close();
+                server.close();
             }        
             catch(IOException ex)
             {}
