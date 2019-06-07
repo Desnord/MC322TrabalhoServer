@@ -65,6 +65,8 @@ public class panelOpcoes extends JPanel
         
         setLayout(new BorderLayout());
         
+        
+        //jpanel south
         JPanel jps = new JPanel();
         GridLayout gl = new GridLayout(vetSint.length+1,2);   
         jps.setLayout(gl);
@@ -94,20 +96,31 @@ public class panelOpcoes extends JPanel
         Enviar = new JButton("Enviar");
         Enviar.setForeground(Color.black);
         Enviar.setBorder(BorderFactory.createLineBorder(Color.black,1));
+      
+        JLabel lblX = new JLabel();
+        lblX.setBorder(BorderFactory.createLineBorder(Color.black,1));
         
-        jps.add(JSInfoPac);
+        
+        jps.add(lblX);
         jps.add(Enviar);
         Enviar.addActionListener(new Envio());
         
         
+        //jpanel center
+        JPanel jpc = new JPanel(new GridLayout(1,2));
+       
         URL iconURL = getClass().getResource("./images/zombie.png");
         ImageIcon icon = new ImageIcon(iconURL);
         Image image = icon.getImage();
-        Image newimg = image.getScaledInstance(250, 250,  java.awt.Image.SCALE_SMOOTH); 
+        Image newimg = image.getScaledInstance(200, 200,  java.awt.Image.SCALE_SMOOTH); 
         icon = new ImageIcon(newimg);
         JLabel lblImg = new JLabel(icon, JLabel.CENTER);  
+        lblImg.setBorder(BorderFactory.createLineBorder(Color.black,1));
         
-        add(BorderLayout.CENTER,lblImg);
+        jpc.add(lblImg);
+        jpc.add(JSInfoPac);
+        
+        add(BorderLayout.CENTER,jpc);
         add(BorderLayout.SOUTH,jps);
     }
     
@@ -116,32 +129,31 @@ public class panelOpcoes extends JPanel
     {
         public void actionPerformed (ActionEvent e)
     	{
-            JTInfoPac.append(" Aguardando conexão... \n");       
-            try
+            JTInfoPac.append("Aguardando conexão... \n");       
+
+            try 
             {
-                try (ServerSocket server = new ServerSocket(Integer.parseInt("6660"))) 
+                ServerSocket server = new ServerSocket(Integer.parseInt("6660"));
+                Socket conexao = server.accept();
+                JTInfoPac.append("Medico conectado! \n");
+                ObjectOutputStream out = new ObjectOutputStream(conexao.getOutputStream());
+
+                String st = random+"";
+
+                for(int i=0;i<jcbs.length;i++)
                 {
-                    Socket conexao = server.accept();
-                    JTInfoPac.append("\n medico conectado! \n");
-                    ObjectOutputStream out = new ObjectOutputStream(conexao.getOutputStream());
+                    st = st+",";
+                    char opcao_at;
+                    
+                    if(jcbs[i].getSelectedItem() == "Sim")
+                        opcao_at = 't';
+                    else
+                        opcao_at = 'f';
 
-                    String st = random+"";
-
-                    for(int i=0;i<jcbs.length;i++)
-                    {
-                        st = st+",";
-                        char opcao_at;
-                        if(jcbs[i].getSelectedItem() == "Sim")
-                            opcao_at = 't';
-                        else
-                            opcao_at = 'f';
-
-                        st = st+opcao_at;
-                    }
-
-                    out.writeObject(st);
+                    st = st+opcao_at;
                 }
-            }
+                    out.writeObject(st);
+                }        
             catch(IOException ex)
             {}
         }         
