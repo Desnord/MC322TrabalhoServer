@@ -16,6 +16,7 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.URL;
+import java.util.Random;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -33,7 +34,7 @@ public class panelOpcoes extends JPanel
 {    
     private JComboBox jcbs[]; 
     private JButton Enviar;
-    private int random = (int)(Math.random()*4+1);            
+    private int random;         
     private String sintomas = "";
     private static JTextArea JTInfoPac;
     
@@ -47,19 +48,26 @@ public class panelOpcoes extends JPanel
                 
         JScrollPane JSInfoPac = new JScrollPane(JTInfoPac);
         JSInfoPac.setBorder(BorderFactory.createLineBorder(Color.black,1));
-                
-        switch(random)
+              
+        random = (int)(Math.random() * ((4 - 1) + 1)) + 1;
+
+        switch (random) 
         {
             case 1:
                 sintomas = "paralysis:,yellow tongue:,trembiling finger:,member loss:,chest pain:,severe anger";
+                break;
             case 2:
                 sintomas = "paralysis:,yellow tongue:,member loss:,chest pain:,trembiling finger:,severe anger:,red eye:,blue skin";
+                break;
             case 3:
                 sintomas = "Paralisia:,Lingua Amarela:,Dedo Tremendo:,Perda de Membro:,Dor no Peito:,Raiva Severa:,Olho vermelho:,Pele azul:";
+                break;
             case 4:
                 sintomas = "paralysis:,yellow tong,member loss:,chest pain:,trembling finger:,severe anger:,history bacteria:";
+                break;
+            default:
+                break;
         }
-        
         
         String vetSint[] = sintomas.split(",");
         JLabel vetLbl[] = new JLabel[vetSint.length];
@@ -163,7 +171,6 @@ public class panelOpcoes extends JPanel
                 out.writeObject(st);
                 JTInfoPac.append("Dados enviados ao médico! \n");
                 
-                //fecha conexao
                 conexao.close();
                 server.close();
             }        
