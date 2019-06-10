@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import servidoryisheng.componentes.RedeServidor;
 
 /**
  *
@@ -148,34 +149,23 @@ public class panelOpcoes extends JPanel
         @Override
         public void actionPerformed (ActionEvent e)
     	{      
-            try 
+            String st = random+"";
+
+            for(int i=0;i<jcbs.length;i++)
             {
-                ServerSocket server = new ServerSocket(Integer.parseInt("6660"));
-                Socket conexao = server.accept();
-                ObjectOutputStream out = new ObjectOutputStream(conexao.getOutputStream());
-
-                String st = random+"";
-
-                for(int i=0;i<jcbs.length;i++)
-                {
-                    st = st+",";
-                    char opcao_at;
+                st = st+",";
+                char opcao_at;
                     
-                    if(jcbs[i].getSelectedItem() == "Sim")
-                        opcao_at = 't';
-                    else
-                        opcao_at = 'f';
+                if(jcbs[i].getSelectedItem() == "Sim")
+                    opcao_at = 't';
+                else
+                    opcao_at = 'f';
 
-                    st = st+opcao_at;
+                st = st+opcao_at;
                 }
-                out.writeObject(st);
-                JTInfoPac.append("Dados enviados ao médico! \n");
                 
-                conexao.close();
-                server.close();
-            }        
-            catch(IOException ex)
-            {}
-        }         
-    }
+            RedeServidor.EnviarDados(st,"6660");
+            JTInfoPac.append("Dados enviados ao médico! \n");
+        }        
+    }         
 }
