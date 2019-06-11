@@ -5,6 +5,8 @@
  */
 package servidoryisheng;
 
+import asclepius.components.ClownCare.classes.ClownCare;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
@@ -22,6 +24,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import servidoryisheng.componentes.RedeServidor;
 
+
+
 /**
  *
  * @author Thomas
@@ -34,6 +38,8 @@ public class panelOpcoes extends JPanel
     private String sintomas = "";
     private static JTextArea JTInfoPac;
     
+    private ClownCare CCare;
+    
     public panelOpcoes()
     {    
         JTInfoPac = new JTextArea();
@@ -42,6 +48,8 @@ public class panelOpcoes extends JPanel
         JTInfoPac.setLineWrap(true);
         JTInfoPac.setEditable(false);       
                 
+        CCare = new ClownCare();
+        
         JScrollPane JSInfoPac = new JScrollPane(JTInfoPac);
         JSInfoPac.setBorder(BorderFactory.createLineBorder(Color.black,1));
               
@@ -161,6 +169,13 @@ public class panelOpcoes extends JPanel
                 
             RedeServidor.EnviarDados(st,"6660");
             JTInfoPac.append("Dados enviados ao médico! \n");
+            
+            
+            /*componente utilizado de outro grupo:
+              conta piada pro paciente
+            */
+           // int aleatorium = (int)(Math.random() * ((100 - 1) + 1)) + 1;
+           // JTInfoPac.append(CCare.randJoke(aleatorium));
         }        
     }         
 }
