@@ -48,7 +48,7 @@ public class panelOpcoes extends JPanel
         JTInfoPac.setLineWrap(true);
         JTInfoPac.setEditable(false);       
                 
-        CCare = new ClownCare();
+        //CCare = new ClownCare();
         
         JScrollPane JSInfoPac = new JScrollPane(JTInfoPac);
         JSInfoPac.setBorder(BorderFactory.createLineBorder(Color.black,1));
@@ -58,10 +58,10 @@ public class panelOpcoes extends JPanel
         switch (random) 
         {
             case 1:
-                sintomas = "paralysis:,yellow tongue:,trembiling finger:,member loss:,chest pain:,severe anger";
+                sintomas = "paralysis:,yellow tongue:,trembiling finger:,member loss:,chest pain:,severe anger:";
                 break;
             case 2:
-                sintomas = "paralysis:,yellow tongue:,member loss:,chest pain:,trembiling finger:,severe anger:,red eye:,blue skin";
+                sintomas = "paralysis:,yellow tongue:,member loss:,chest pain:,trembiling finger:,severe anger:,red eye:,blue skin:";
                 break;
             case 3:
                 sintomas = "Paralisia:,Lingua Amarela:,Dedo Tremendo:,Perda de Membro:,Dor no Peito:,Raiva Severa:,Olho vermelho:,Pele azul:";
